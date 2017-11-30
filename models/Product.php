@@ -9,7 +9,7 @@ class Product extends ActiveRecord {
         return 'product';
     }
     
-    public function getCategories() { 
+    public function getCategory() { 
         return $this->hasOne(Category::className(), ['id' => 'category_id']);
     }
 }
