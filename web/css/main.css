@@ -2025,6 +2025,14 @@ h2.title {
   margin-bottom: 30px
 }
 
+/* eu */
+.blog-post-area img {
+    width: 30%;
+     float:left; /* Выравнивание по левому краю */
+    margin: 7px 7px 7px 0; /* Отступы вокруг картинки */
+   }
+}
+
 .blog-post-area  
 .single-blog-post p {
   color: #363432

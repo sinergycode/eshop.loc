@@ -98,13 +98,12 @@ ltAppAsset::register($this);
                     <div class="col-sm-8">
                         <div class="shop-menu pull-right">
                             <ul class="nav navbar-nav">
+                                <!--<li><a href="#"><i class="fa fa-star"></i> Wishlist</a></li>-->
+                                <!--<li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li>-->
+                                <li><a href="#" onclick="return getCart()"><i class="fa fa-shopping-cart"></i> Корзина</a></li>
                                 <?php if(!Yii::$app->user->isGuest): ?>
-                                    <li><a href="<?= \yii\helpers\Url::to(['/site/logout'])?>"><i class="fa fa-user"></i> <?= Yii::$app->user->identity['username']?> (Выход)</a></li>
+                                    <li><a href="<?= \yii\helpers\Url::to(['/site/logout'])?>"><i class="fa fa-user"></i> Выход: <?= Yii::$app->user->identity['username']?></a></li>
                                 <?php endif;?>
-                                <li><a href="#"><i class="fa fa-star"></i> Wishlist</a></li>
-                                <li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li>
-                                <li><a href="#" onclick="return getCart()"><i class="fa fa-shopping-cart"></i> Cart</a></li>
-                                <li><a href="login.html"><i class="fa fa-lock"></i> Login</a></li>
                             </ul>
                         </div>
                     </div>
@@ -126,7 +125,7 @@ ltAppAsset::register($this);
                         </div>
                         <div class="mainmenu pull-left">
                             <ul class="nav navbar-nav collapse navbar-collapse">
-                                <li><a href="<?=\yii\helpers\Url::to(['/admin']) ?>" class="active">Home</a></li>
+                                <li><a href="<?=\yii\helpers\Url::to(['/admin']) ?>" class="active">Заказы</a></li>
                                 <li class="dropdown"><a href="#">Категории<i class="fa fa-angle-down"></i></a>
                                     <ul role="menu" class="sub-menu">
                                         <li><a href="<?=\yii\helpers\Url::to(['category/index']) ?>">Список категорий</a></li>
@@ -136,6 +135,13 @@ ltAppAsset::register($this);
                                 <li class="dropdown"><a href="#">Товары<i class="fa fa-angle-down"></i></a>
                                     <ul role="menu" class="sub-menu">
                                         <li><a href="<?=\yii\helpers\Url::to(['product/index']) ?>">Список товаров</a></li>
+                                        <li><a href="<?=\yii\helpers\Url::to(['product/create']) ?>">Добавить товар</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown"><a href="#">Блог<i class="fa fa-angle-down"></i></a>
+                                    <ul role="menu" class="sub-menu">
+                                        <li><a href="<?=\yii\helpers\Url::to(['post/index']) ?>">Список статей</a></li>
+                                        <li><a href="<?=\yii\helpers\Url::to(['post/create']) ?>">Добавить статью</a></li>
                                     </ul>
                                 </li>
                             </ul>

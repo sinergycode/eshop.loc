@@ -10,6 +10,7 @@ use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
 use app\assets\ltAppAsset;
+use yii\helpers\Url;
 
 AppAsset::register($this);
 ltAppAsset::register($this);
@@ -93,13 +94,15 @@ ltAppAsset::register($this);
 					<div class="col-sm-8">
 						<div class="shop-menu pull-right">
 							<ul class="nav navbar-nav">
-                                    <?php if(!Yii::$app->user->isGuest): ?>
-                                        <li><a href="<?= \yii\helpers\Url::to(['/site/logout'])?>"><i class="fa fa-user"></i> <?= Yii::$app->user->identity['username']?> (Выход)</a></li>
-                                    <?php endif;?>
-                                                                <li><a href="#"><i class="fa fa-star"></i> Wishlist</a></li>
-								<li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li>
-								<li><a href="#" onclick="return getCart()"><i class="fa fa-shopping-cart"></i> Cart</a></li>
-								<li><a href="<?= \yii\helpers\Url::to(['/admin'])?>"><i class="fa fa-lock"></i> Login</a></li>
+                                                                <!--<li><a href="#"><i class="fa fa-star"></i> Wishlist</a></li>-->
+								<!--<li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li>-->
+								<li><a href="#" onclick="return getCart()"><i class="fa fa-shopping-cart"></i> Корзина</a></li>
+                                <?php if(!Yii::$app->user->isGuest): ?>
+                                    <li><a href="<?= \yii\helpers\Url::to(['/admin'])?>"><i class="fa fa-lock"></i> Админка</a></li>
+                                    <li><a href="<?= \yii\helpers\Url::to(['/site/logout'])?>"><i class="fa fa-user"></i> Выход: <?= Yii::$app->user->identity['username']?></a></li>
+                                <?php else :?>
+                                        <li><a href="<?= \yii\helpers\Url::to(['/admin'])?>"><i class="fa fa-lock"></i> Login</a></li>
+                                <?php endif;?>
 							</ul>
 						</div>
 					</div>
@@ -121,24 +124,18 @@ ltAppAsset::register($this);
 						</div>
 						<div class="mainmenu pull-left">
 							<ul class="nav navbar-nav collapse navbar-collapse">
-								<li><a href="index.html" class="active">Home</a></li>
-								<li class="dropdown"><a href="#">Shop<i class="fa fa-angle-down"></i></a>
+								<li><a href="<?= yii\helpers\Url::home() ?>" class="active">Главная</a></li>
+
+								<li><a href="<?=Url::to('/site/about')?>">Компания</a></li>
+
+								<li class="dropdown"><a href="#">Блог<i class="fa fa-angle-down"></i></a>
                                     <ul role="menu" class="sub-menu">
-                                        <li><a href="shop.html">Products</a></li>
-										<li><a href="product-details.html">Product Details</a></li> 
-										<li><a href="checkout.html">Checkout</a></li> 
-										<li><a href="cart.html">Cart</a></li> 
-										<li><a href="login.html">Login</a></li> 
+                                        <li><a href="<?=Url::to('/post/index')?>">Все статьи</a></li>
+					<li><a href="blog-single.html">Написать статью</a></li>
                                     </ul>
                                 </li> 
-								<li class="dropdown"><a href="#">Blog<i class="fa fa-angle-down"></i></a>
-                                    <ul role="menu" class="sub-menu">
-                                        <li><a href="blog.html">Blog List</a></li>
-										<li><a href="blog-single.html">Blog Single</a></li>
-                                    </ul>
-                                </li> 
-								<li><a href="404.html">404</a></li>
-								<li><a href="contact-us.html">Contact</a></li>
+                                
+                                                                 <li><a href="<?=Url::to('/site/contact')?>">Контакты</a></li>
 							</ul>
 						</div>
 					</div>

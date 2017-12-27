@@ -42,34 +42,32 @@ use yii\helpers\Html;
 
     </div>
 </div>
+    
+<?php
+$mainImg = $product->getImage();
+$gallery = $product->getImages();
+?>
 
 <div class="col-sm-9 padding-right">
 <div class="product-details"><!--product-details-->
     <div class="col-sm-5">
         <div class="view-product">
-            <?= Html::img("@web/images/products/{$product->img}", ['alt' => $product->name])?>
+            <?= Html::img($mainImg->getUrl(), ['alt' => $product->name])?>
             <h3>ZOOM</h3>
         </div>
         <div id="similar-product" class="carousel slide" data-ride="carousel">
 
             <!-- Wrapper for slides -->
             <div class="carousel-inner">
-                <div class="item active">
-                    <a href=""><img src="/images/product-details/similar1.jpg" alt=""></a>
-                    <a href=""><img src="/images/product-details/similar2.jpg" alt=""></a>
-                    <a href=""><img src="/images/product-details/similar3.jpg" alt=""></a>
-                </div>
-                <div class="item">
-                    <a href=""><img src="/images/product-details/similar1.jpg" alt=""></a>
-                    <a href=""><img src="/images/product-details/similar2.jpg" alt=""></a>
-                    <a href=""><img src="/images/product-details/similar3.jpg" alt=""></a>
-                </div>
-                <div class="item">
-                    <a href=""><img src="/images/product-details/similar1.jpg" alt=""></a>
-                    <a href=""><img src="/images/product-details/similar2.jpg" alt=""></a>
-                    <a href=""><img src="/images/product-details/similar3.jpg" alt=""></a>
-                </div>
-
+<?php $count = count($gallery); $i = 0; foreach($gallery as $img): ?>
+    <?php if($i % 3 == 0):?>
+        <div class="item <?php if($i == 0) echo ' active'?>">
+    <?php endif;?>
+        <a href=""><?= Html::img($img->getUrl('84x85'), ['alt' => ''])?></a>
+    <?php $i++; if($i % 3 == 0 || $i == $count):?>
+        </div>
+    <?php endif;?>
+<?php endforeach;?>
             </div>
 
             <!-- Controls -->
@@ -309,6 +307,7 @@ use yii\helpers\Html;
     <div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">
 <?php $count = count($hits); $i = 0; foreach($hits as $hit): ?>
+<?php $mainHitImg = $hit->getImage(); ?>
 <?php if($i % 3 == 0): ?>
     <div class="item <?php if($i == 0) echo 'active' ?>">
 <?php endif; ?>
@@ -316,7 +315,7 @@ use yii\helpers\Html;
             <div class="product-image-wrapper">
                 <div class="single-products">
                     <div class="productinfo text-center">
-                        <?= Html::img("@web/images/products/{$hit->img}", ['alt' => $hit->name])?>
+                         <?= Html::img($mainHitImg-> getUrl('268x249'), ['alt' => $hit->name])?>
                         <h2>$<?= $hit->price?></h2>
                         <p><a href="<?= \yii\helpers\Url::to(['product/view', 'id' => $hit->id])?>"><?= $hit->name?></a></p>
                         <button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
