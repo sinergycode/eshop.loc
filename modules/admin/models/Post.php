@@ -19,6 +19,17 @@ class Post extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
+    
+    public $image;
+    
+    public function behaviors(){
+        return [
+            'image' => [
+                'class' => 'rico\yii2images\behaviors\ImageBehave',
+            ]
+        ];
+    }
+    
     public static function tableName()
     {
         return 'post';
@@ -30,9 +41,11 @@ class Post extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'excerpt', 'text'], 'required'],
+            [['created_at', 'title', 'excerpt', 'text'], 'required'],
+            [['created_at'], 'safe'],
             [['text'], 'string'],
             [['title', 'excerpt', 'keywords', 'description'], 'string', 'max' => 255],
+            [['image'], 'file', 'extensions' => 'png, jpg'],
         ];
     }
 
@@ -43,11 +56,26 @@ class Post extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'title' => 'Title',
-            'excerpt' => 'Excerpt',
-            'text' => 'Text',
-            'keywords' => 'Keywords',
-            'description' => 'Description',
+            'created_at' => 'Дата создания',
+            'title' => 'Заголовок',
+            'excerpt' => 'Краткое содержание',
+            'text' => 'Полное содержание',
+            'author' => 'Автор',
+            'keywords' => 'Мета ключевики',
+            'description' => 'Мета описание',
+            'image' => 'Фото заголовка статьи',
         ];
+    }
+    
+    public function upload(){
+        if($this->validate()){
+            $path = 'upload/store/' . $this->image->baseName . '.' . $this->image->extension;
+            $this->image->saveAs($path);
+            $this->attachImage($path, true);
+            @unlink($path);
+            return true;
+        }else{
+            return false;
+        }
     }
 }

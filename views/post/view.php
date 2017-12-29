@@ -1,8 +1,22 @@
-<div class="container">
-        <div class="panel panel-default">
+<div class="container blog-post-area">
+        <div class="panel panel-default single-blog-post">
           <div class="panel-heading">
                 <h3 class="panel-title"><?=$post->title?></a></h3>
           </div>
+                                                        <div class="post-meta">
+								<ul>
+									<li><i class="fa fa-user"></i> Mac Doe</li>
+									<li><i class="fa fa-clock-o"></i> 1:33 pm</li>
+									<li><i class="fa fa-calendar"></i> DEC 5, 2013</li>
+								</ul>
+								<span>
+										<i class="fa fa-star"></i>
+										<i class="fa fa-star"></i>
+										<i class="fa fa-star"></i>
+										<i class="fa fa-star"></i>
+										<i class="fa fa-star-half-o"></i>
+								</span>
+							</div>
           <div class="panel-body">
             <?= $post->text; ?>
           </div>

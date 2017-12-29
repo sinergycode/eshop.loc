@@ -93,17 +93,15 @@ ltAppAsset::register($this);
 					</div>
 					<div class="col-sm-8">
 						<div class="shop-menu pull-right">
-							<ul class="nav navbar-nav">
-                                                                <!--<li><a href="#"><i class="fa fa-star"></i> Wishlist</a></li>-->
-								<!--<li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li>-->
-								<li><a href="#" onclick="return getCart()"><i class="fa fa-shopping-cart"></i> Корзина</a></li>
-                                <?php if(!Yii::$app->user->isGuest): ?>
-                                    <li><a href="<?= \yii\helpers\Url::to(['/admin'])?>"><i class="fa fa-lock"></i> Админка</a></li>
-                                    <li><a href="<?= \yii\helpers\Url::to(['/site/logout'])?>"><i class="fa fa-user"></i> Выход: <?= Yii::$app->user->identity['username']?></a></li>
-                                <?php else :?>
-                                        <li><a href="<?= \yii\helpers\Url::to(['/admin'])?>"><i class="fa fa-lock"></i> Login</a></li>
-                                <?php endif;?>
-							</ul>
+                                                    <ul class="nav navbar-nav">
+                                                        <li><a href="#" onclick="return getCart()"><i class="fa fa-shopping-cart"></i> Корзина</a></li>
+                                                        <?php if(!Yii::$app->user->isGuest): ?>
+                                                            <li><a href="<?= \yii\helpers\Url::to(['/admin'])?>"><i class="fa fa-lock"></i> Админка</a></li>
+                                                            <li><a href="<?= \yii\helpers\Url::to(['/site/logout'])?>"><i class="fa fa-user"></i> Выход: <?= Yii::$app->user->identity['username']?></a></li>
+                                                        <?php else :?>
+                                                                <li><a href="<?= \yii\helpers\Url::to(['/admin'])?>"><i class="fa fa-lock"></i> Login</a></li>
+                                                        <?php endif;?>
+                                                    </ul>
 						</div>
 					</div>
 				</div>
@@ -131,7 +129,7 @@ ltAppAsset::register($this);
 								<li class="dropdown"><a href="#">Блог<i class="fa fa-angle-down"></i></a>
                                     <ul role="menu" class="sub-menu">
                                         <li><a href="<?=Url::to('/post/index')?>">Все статьи</a></li>
-					<li><a href="blog-single.html">Написать статью</a></li>
+					<li><a href="<?=Url::to('/post/index')?>">Популярные</a></li>
                                     </ul>
                                 </li> 
                                 

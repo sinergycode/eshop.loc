@@ -23,21 +23,9 @@ class PostController extends AppController {
     public function actionView() {
  	$id = \Yii::$app->request->get('id');
  	$post = Post::findOne($id);
+        $this->setMeta('E-SHOPPER | ' . $post->title, $post->keywords, $post->description);
         if(empty($post)) throw new \yii\web\HttpException(404, 'Такой страницы нет');
         return $this->render('view', compact('post'));
-}
-     
-    
-    public function actionTest() {
-        $this->layout = 'basic';
-        $names = ['Ivanov', 'Petrov', 'Sidorov'];
-        // $this->debug($names);
-        return $this->render('test', compact('names'));
-    }    
-    
-    public function actionShow() {
-        $this->layout = 'basic';
-        return $this->render('show');
-    }  
+    } 
     
 }

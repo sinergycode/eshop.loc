@@ -2012,7 +2012,7 @@ h2.title {
   font-family: 'Roboto',sans-serif;
   text-transform: uppercase;
   font-weight: 500;
-  margin-bottom: 17px;
+  margin-bottom: 6px;
 }
 
 .single-blog-post > a {
@@ -2020,22 +2020,19 @@ h2.title {
 
 .blog-post-area 
 .single-blog-post a img {
-  border: 1px solid #F7F7F0;
-  width: 100%;
-  margin-bottom: 30px
-}
-
-/* eu */
-.blog-post-area img {
-    width: 30%;
-     float:left; /* Выравнивание по левому краю */
-    margin: 7px 7px 7px 0; /* Отступы вокруг картинки */
-   }
+    float:left; 
+    margin: 7px 7px 7px 20px; 
+    border: 1px solid #F7F7F0;
 }
 
 .blog-post-area  
 .single-blog-post p {
   color: #363432
+}
+
+.post-meta {
+    margin-left: 15px;
+    margin-right: 15px;
 }
 
 .blog-post-area 
@@ -2056,6 +2053,7 @@ h2.title {
   background:#F0F0E9;
   float: left;
   margin-right: 10px;
+  margin-top: 5px;
   padding: 0 5px;
   font-size: 11px;
   color: #393b3b;
@@ -2088,7 +2086,7 @@ h2.title {
 .blog-post-area 
 .post-meta ul span {
   float: right;
-  color: #FE980F
+  color: #FE980F;
 }
 
 .post-meta span{
@@ -2096,7 +2094,8 @@ h2.title {
 }
 
 .post-meta span i{
-  color: #FE980F
+  color: #FE980F;
+  margin-top: 5px;
 }
 
 
@@ -2108,6 +2107,8 @@ h2.title {
   border-radius: 0;
   color: #FFFFFF;
   margin-top: 17px;
+  margin-left: 5px;
+  margin-bottom: 5px;
 }
 
 
