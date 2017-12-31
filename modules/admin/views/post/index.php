@@ -23,13 +23,23 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
             'created_at',
+            'updated_at',
+            'publicated_at',
             'title',
             'excerpt',
 //            'text:ntext',
             'author',
 //            'keywords',
             // 'description',
-            'img',
+                        
+            [
+                'attribute' => 'image',
+                'value' => function($data){
+                    return "<img src='{$data->getImage()->getUrl('68x')}'>";
+                },
+                'format' => 'html',
+            ],
+
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

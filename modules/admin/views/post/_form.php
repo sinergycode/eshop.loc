@@ -5,6 +5,7 @@ use yii\widgets\ActiveForm;
 use mihaildev\ckeditor\CKEditor;
 use mihaildev\elfinder\ElFinder;
 mihaildev\elfinder\Assets::noConflict($this);
+use yii\jui\DatePicker;
 
 /* @var $this yii\web\View */
 /* @var $model app\modules\admin\models\Post */
@@ -15,7 +16,13 @@ mihaildev\elfinder\Assets::noConflict($this);
 
     <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
     
-    <?= $form->field($model, 'created_at')->textInput() ?>
+    <?= $form->field($model,'publicated_at')->widget(DatePicker::className(),
+//                                                    ['dateFormat' => 'dd.mm.yy',
+                                                    ['clientOptions' => [
+//                                                                            'defaultDate' => '2014-01-01',
+                                                                            'dateFormat' => 'yyyy-MM-dd',
+                                                                        ],
+                                                    ]) ?>
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 

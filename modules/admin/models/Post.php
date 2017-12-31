@@ -1,6 +1,9 @@
 <?php
 
 namespace app\modules\admin\models;
+use yii\db\ActiveRecord;
+use yii\behaviors\TimestampBehavior;
+use yii\db\Expression;
 
 use Yii;
 
@@ -14,7 +17,7 @@ use Yii;
  * @property string $keywords
  * @property string $description
  */
-class Post extends \yii\db\ActiveRecord
+class Post extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -24,10 +27,19 @@ class Post extends \yii\db\ActiveRecord
     
     public function behaviors(){
         return [
-            'image' => [
-                'class' => 'rico\yii2images\behaviors\ImageBehave',
-            ]
-        ];
+                    'image' => [
+                        'class' => 'rico\yii2images\behaviors\ImageBehave',
+                    ],
+                    [
+                        'class' => TimestampBehavior::className(),
+                        'attributes' => [
+                            ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
+                            ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
+                        ],
+                        // если вместо метки времени UNIX используется datetime:
+                        'value' => new Expression('NOW()'),
+                    ],
+            ];
     }
     
     public static function tableName()
@@ -41,10 +53,10 @@ class Post extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['created_at', 'title', 'excerpt', 'text'], 'required'],
-            [['created_at'], 'safe'],
+            [['publicated_at', 'title', 'excerpt', 'text'], 'required'],
+            [['created_at', 'updated_at'], 'safe'],
             [['text'], 'string'],
-            [['title', 'excerpt', 'keywords', 'description'], 'string', 'max' => 255],
+            [['author','title', 'excerpt', 'keywords', 'description'], 'string', 'max' => 255],
             [['image'], 'file', 'extensions' => 'png, jpg'],
         ];
     }
@@ -57,6 +69,8 @@ class Post extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'created_at' => 'Дата создания',
+            'updated_at' => 'Дата обновления',
+            'publicated_at' => 'Дата публикации',
             'title' => 'Заголовок',
             'excerpt' => 'Краткое содержание',
             'text' => 'Полное содержание',

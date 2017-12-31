@@ -23,7 +23,7 @@
                 alert('Error!');
             }
         });
-//        return false;
+        return false;
     }
 
     $('#cart .modal-body').on('click', '.del-item', function(){
