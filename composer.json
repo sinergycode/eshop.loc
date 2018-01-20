@@ -20,7 +20,14 @@
         "yiisoft/yii2-swiftmailer": "~2.0.0",
         "mihaildev/yii2-ckeditor": "*",
         "mihaildev/yii2-elfinder": "*",
-        "costa-rico/yii2-images": "dev-master"
+        "costa-rico/yii2-images": "dev-master",
+        "kartik-v/yii2-widget-datepicker": "@dev",
+        "kartik-v/yii2-field-range": "*",
+        "kartik-v/yii2-widget-timepicker": "*",
+        "kartik-v/yii2-widget-datetimepicker": "*",
+        "kartik-v/yii2-datecontrol": "dev-master",
+        "kartik-v/yii2-widget-rating": "*",
+        "yii2mod/yii2-comments": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

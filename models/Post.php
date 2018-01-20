@@ -18,7 +18,29 @@ class Post extends ActiveRecord {
         ];
     }
     
+    
     public static function tableName() {
         return 'post';
+    }
+    
+    public function rules()
+    {
+        return [
+            [['post_rate'], 'safe'],
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'post_rate' => 'post_rate',
+        ];
+    }
+    
+    public function getRating(){ 
+        return $this->hasMany(Rating::className(), ['post_id' => 'id']);
     }
 }

@@ -1,4 +1,5 @@
 <?php
+use kartik\datecontrol\Module;
 
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
@@ -25,6 +26,35 @@ $config = [
             'placeHolderPath' => '@webroot/upload/store/no-image.png', // if you want to get placeholder when image not exists, string will be processed by Yii::getAlias
             'imageCompressionQuality' => 100, // Optional. Default value is 85.
         ],
+        'datecontrol' => [
+                'class' => 'kartik\datecontrol\Module',
+
+                 // format settings for displaying each date attribute (ICU format example)
+                'displaySettings' => [
+                    Module::FORMAT_DATE => 'php:d-M-Y',
+                    Module::FORMAT_TIME => 'php: H:i',
+                    Module::FORMAT_DATETIME => 'php:d-m-Y H:i', 
+                ],
+
+                // format settings for saving each date attribute (PHP format example)
+                'saveSettings' => [
+                    Module::FORMAT_DATE => 'yyyy-M-dd', // saves as unix timestamp
+                    Module::FORMAT_TIME => 'H:i:s',
+                    Module::FORMAT_DATETIME => 'yyyy-M-dd H:i:s',
+                ],
+
+                // set your display timezone
+                'displayTimezone' => 'UTC',
+
+                // set your timezone for date saved to db
+                'saveTimezone' => 'UTC',
+
+                // automatically use kartik\widgets for each of the above formats
+                'autoWidget' => true,
+            ],
+            'comment' => [
+                'class' => 'yii2mod\comments\Module',
+            ],
     ],
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
@@ -80,6 +110,24 @@ $config = [
                 'category/<id:\d+>' => 'category/view',
                 'product/<id:\d+>' => 'product/view',
                 'search' => 'category/search',
+            ],
+        ],
+        'formatter' => [
+            'class' => 'yii\i18n\Formatter',
+            'decimalSeparator' => ',',
+            'thousandSeparator' => ' ',
+            'currencyCode' => 'EUR',
+            'timeFormat' => 'php: H:i',
+            'dateFormat' => 'php: d/M/Y',
+            'datetimeFormat' => 'php: d/M/Y H:i',
+        ],
+        'i18n' => [
+            'translations' => [
+                'yii2mod.comments' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    'basePath' => '@yii2mod/comments/messages',
+                ],
+                // ...
             ],
         ],
     ],

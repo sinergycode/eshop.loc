@@ -1,31 +1,96 @@
+<?php 
+use kartik\rating\StarRating;
+use yii\widgets\ActiveForm;
+use \yii2mod\comments\widgets\Comment;
+?>
+
 <div class="container blog-post-area">
         <div class="panel panel-default single-blog-post">
-          <div class="panel-heading">
+            
+            <div class="panel-heading">
                 <h3 class="panel-title"><?=$post->title?></a></h3>
-          </div>
-                                                        <div class="post-meta">
-								<ul>
-									<li><i class="fa fa-user"></i> Mac Doe</li>
-									<li><i class="fa fa-clock-o"></i> 1:33 pm</li>
-									<li><i class="fa fa-calendar"></i> DEC 5, 2013</li>
-								</ul>
-								<span>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star-half-o"></i>
-								</span>
-							</div>
-          <div class="panel-body">
-            <?= $post->text; ?>
-          </div>
-            						<div class="pager-area">
-								<ul class="pager pull-right">
-									<li><a href="#">Pre</a></li>
-									<li><a href="#">Next</a></li>
-								</ul>
-							</div>
+            </div>
+
+            <div class="post-meta">
+                    <ul>
+                        <li><i class="fa fa-user"></i> <?=$post->author?> </li>
+                        <li><i class="fa fa-clock-o"></i> <?= Yii::$app->formatter->asTime($post->time); ?> </li>
+                        <li><i class="fa fa-calendar"></i> <?= Yii::$app->formatter->asDate($post->date); ?> </li>
+                    </ul>
+                
+                    <div class="star-main-container">
+                        
+                        <span class="star-container voters"><?php echo $post->rating[0]['number_votes'] ?> человек</span>
+                        
+                        <span class="star-container">
+                                           
+                        <?php 
+                            $js = <<<JS
+                            function forAjax (event, value, caption) { 
+                                $.ajax({
+                                    type: 'POST', 
+                                    url: '/rating/update-rating', 
+                                    data: { 
+                                        points: value, 
+                                        post_id: $post->id
+                                    }, 
+                                    dataType:'json',
+                                    success: function(response) {
+                                        console.log(response.success);
+                                        $(event.currentTarget).rating('update', response.dec_avg);
+                                        document.getElementsByClassName('voters')[0].innerHTML = response.number_votes + " человек";
+                                        document.getElementsByClassName('dec-avg')[0].innerHTML = "Оценка: " + response.dec_avg;
+                                    }, 
+                                    error: function(e) {
+                                        console.log('not sent');
+                                        console.log(e.responseText); 
+                                    }  
+                                }); 
+                            }
+JS;
+$this->registerJs($js);          
+                        ?>
+                                 
+                        <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
+                        <?php 
+                        echo StarRating::widget([
+                            'name' => $post->post_rate,
+    //                        'value' => isset($post->post_rate) ? $post->post_rate : 0,
+                            'value' => isset($post->rating[0]['dec_avg']) ? $post->rating[0]['dec_avg'] : 0,
+                            'pluginOptions' => [
+                                    'size'=>'xs',
+    //                                'step' => 0.1,
+    //                                'theme' => 'krajee-fa',
+                                    'filledStar' => '&#x2605;',
+                                    'emptyStar' => '&#x2606;',
+    //                                'value' => 2,
+                                    'disabled' => false,
+                                    'showClear'=>false,
+    //                                'displayOnly' => false, 
+                                    'showCaption' => false,
+                                ], 
+                                'pluginEvents' => [
+                                    'rating:change' => $js,
+                                ],
+                        ]); ?>
+                            <?php ActiveForm::end(); ?>
+                        </span>
+
+                        <span class="star-container dec-avg"> Оценка: <?php echo $post->rating[0]['dec_avg'] ?></span>
+                    </div>
+            </div>
+            
+            <div class="panel-body">
+              <?= $post->text; ?>
+            </div>
+
+            <div class="pager-area">
+                    <ul class="pager pull-right">
+                            <li><a href="<?= yii\helpers\Url::to(['post/view', 'id' => $post->id - 1])?>">Pre</a></li>
+                            <li><a href="<?= yii\helpers\Url::to(['post/view', 'id' => $post->id + 1])?>">Next</a></li>
+                    </ul>
+            </div>
+            
         </div>
     
     					<div class="rating-area">
@@ -52,7 +117,7 @@
 						<a href=""><img src="/images/blog/socials.png" alt="socials.png"></a>
 					</div><!--/socials-share-->
 
-					<div class="media commnets">
+<!--					<div class="media commnets">
 						<a class="pull-left" href="#">
 							<img class="media-object" src="/images/blog/man-one.jpg" alt="">
 						</a>
@@ -69,9 +134,9 @@
 								<a class="btn btn-primary" href="">Other Posts</a>
 							</div>
 						</div>
-					</div><!--Comments-->
+					</div>Comments-->
 
-					<div class="response-area">
+<!--					<div class="response-area">
 						<h2>3 RESPONSES</h2>
 						<ul class="media-list">
 							<li class="media">
@@ -118,8 +183,9 @@
 								</div>
 							</li>
 						</ul>					
-					</div><!--/Response-area-->
-					<div class="replay-box">
+					</div>/Response-area-->
+
+<!--					<div class="replay-box">
 						<div class="row">
 							<div class="col-sm-4">
 								<h2>Leave a replay</h2>
@@ -151,5 +217,18 @@
 								</div>
 							</div>
 						</div>
-					</div><!--/Repaly Box-->
+					</div>/Repaly Box-->
+
+        <?php echo Comment::widget([
+            'model' => $post,
+            'dataProviderConfig' => [
+                  'pagination' => [
+                      'pageSize' => 4
+                  ],
+//            'listViewConfig' => [
+//              'emptyText' => Yii::t('app', 'No comments found.'),
+//            ],
+      ]
+        ]); ?>
+
 </div>

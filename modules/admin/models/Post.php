@@ -53,7 +53,7 @@ class Post extends ActiveRecord
     public function rules()
     {
         return [
-            [['publicated_at', 'title', 'excerpt', 'text'], 'required'],
+            [['date', 'time', 'title', 'excerpt', 'text'], 'required'],
             [['created_at', 'updated_at'], 'safe'],
             [['text'], 'string'],
             [['author','title', 'excerpt', 'keywords', 'description'], 'string', 'max' => 255],
@@ -70,7 +70,8 @@ class Post extends ActiveRecord
             'id' => 'ID',
             'created_at' => 'Дата создания',
             'updated_at' => 'Дата обновления',
-            'publicated_at' => 'Дата публикации',
+            'date' => 'Дата публикации',
+            'time' => 'Время публикации',
             'title' => 'Заголовок',
             'excerpt' => 'Краткое содержание',
             'text' => 'Полное содержание',

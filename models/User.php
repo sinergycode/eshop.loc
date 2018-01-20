@@ -44,6 +44,10 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
     {
         return $this->id;
     }
+    
+    public function getRatings() {
+        return $this->hasMany(Rating::className(), ['user_id' => 'id'])->orderBy(['id' => SORT_DESC]);
+    }
 
     /**
      * @inheritdoc

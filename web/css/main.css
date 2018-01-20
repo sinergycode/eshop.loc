@@ -2089,12 +2089,28 @@ h2.title {
   color: #FE980F;
 }
 
-.post-meta span{
+.post-meta div.star-main-container{
     float: right;
+    margin-top: -9px;
+}
+
+.post-meta span.star-container{
+    display: inline-block;
+    font-family: 'Roboto', sans-serif;
+}
+
+.post-meta span.voters{
+    font-size: 85%;
+    vertical-align: super;
+}
+
+.post-meta span.dec-avg{
+    font-size: 85%;
+    vertical-align: super;
 }
 
 .post-meta span i{
-  color: #FE980F;
+  /*color: #FE980F;*/
   margin-top: 5px;
 }
 
