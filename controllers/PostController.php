@@ -3,7 +3,7 @@
 namespace app\controllers;
 use app\models\Post;
 use Yii;
-use app\models\Rating;
+use app\models\Status;
 
 /**
  * Description of PostController
@@ -23,10 +23,11 @@ class PostController extends AppController {
     
     public function actionView() {
  	$id = \Yii::$app->request->get('id');
- 	$post = Post::findOne($id); 
+ 	$post = Post::findOne($id);
+        $user = Status::findOne(['post_id' => $id, 'user_id' => Yii::$app->user->getId()]);
         $this->setMeta('E-SHOPPER | ' . $post->title, $post->keywords, $post->description);
         if(empty($post)) throw new \yii\web\HttpException(404, 'Такой страницы нет');
-        return $this->render('view', compact('post'));
+        return $this->render('view', compact('post', 'user'));
     } 
     
 }

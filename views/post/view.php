@@ -26,10 +26,10 @@ use \yii2mod\comments\widgets\Comment;
                                            
                         <?php 
                             $js = <<<JS
-                            function forAjax (event, value, caption) { 
+                            function forRatingChange (event, value, caption) { 
                                 $.ajax({
                                     type: 'POST', 
-                                    url: '/rating/update-rating', 
+                                    url: '/rating/get-params', 
                                     data: { 
                                         points: value, 
                                         post_id: $post->id
@@ -37,6 +37,8 @@ use \yii2mod\comments\widgets\Comment;
                                     dataType:'json',
                                     success: function(response) {
                                         console.log(response.success);
+                                        console.log(response.is_guest);
+                                        console.log(response.user);
                                         $(event.currentTarget).rating('update', response.dec_avg);
                                         document.getElementsByClassName('voters')[0].innerHTML = response.number_votes + " человек";
                                         document.getElementsByClassName('dec-avg')[0].innerHTML = "Оценка: " + response.dec_avg;
@@ -65,8 +67,8 @@ $this->registerJs($js);
                                     'emptyStar' => '&#x2606;',
     //                                'value' => 2,
                                     'disabled' => false,
-                                    'showClear'=>false,
-    //                                'displayOnly' => false, 
+                                    'showClear'=> false,
+                                    'displayOnly' => $user->vote_status ? true : false, 
                                     'showCaption' => false,
                                 ], 
                                 'pluginEvents' => [
